@@ -19,7 +19,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public Employee findById(Integer id) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(
-                "Select * from employee join city on employee.city_id = city.city_id and id = (?)")) {
+                "SELECT * FROM employee LEFT JOIN city ON employee.city_id = city.city_id WHERE id = (?)")) {
             preparedStatement.setInt(1, id);
             preparedStatement.setMaxRows(1);
             ResultSet resultSet = preparedStatement.executeQuery();

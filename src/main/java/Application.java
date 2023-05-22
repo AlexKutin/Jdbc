@@ -1,3 +1,4 @@
+import config.ConnectionConfig;
 import dao.CityDAO;
 import dao.CityDAOImpl;
 import dao.EmployeeDAO;
@@ -10,13 +11,9 @@ import java.sql.*;
 public class Application {
 
     public static void main(String[] args) {
-        final String url = "jdbc:postgresql://localhost:5432/skypro";
-        final String username = "postgres";
-        final String password = "Renby413!";
-
         final String getByIdRequest = "SELECT * FROM employee WHERE id = (?)";
 
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = ConnectionConfig.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(getByIdRequest)
         ) {
             int idEmployee = 2;
@@ -40,7 +37,7 @@ public class Application {
         }
 
         // Task 2
-        try (Connection connection = DriverManager.getConnection(url, username, password);
+        try (Connection connection = ConnectionConfig.getConnection();
         ) {
             EmployeeDAO employeeDAO = new EmployeeDAOImpl(connection);
             System.out.println("Print all employees:");
@@ -56,6 +53,8 @@ public class Application {
             Employee employeeId3 = employeeDAO.findById(3);
             System.out.println(employeeId3);
             System.out.println();
+
+            System.out.println(employeeDAO.findById(7));
 
             System.out.println("Update Employee with id = 3:");
             CityDAO cityDAO = new CityDAOImpl(connection);
