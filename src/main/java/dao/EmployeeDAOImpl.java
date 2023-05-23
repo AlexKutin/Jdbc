@@ -1,5 +1,6 @@
 package dao;
 
+import exceptions.EmployeeDAOException;
 import model.City;
 import model.Employee;
 
@@ -56,7 +57,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0;
+            throw new EmployeeDAOException("Create employee error: " + e.getMessage());
         }
     }
 
@@ -70,7 +71,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0;
+            throw new EmployeeDAOException("Update employee error: " + e.getMessage());
         }
     }
 
@@ -98,7 +99,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
             return preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0;
+            throw new EmployeeDAOException("Delete employee error: " + e.getMessage());
         }
     }
 }
