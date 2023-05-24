@@ -2,22 +2,19 @@ package model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class City {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "city_id")
     private int cityId;
+    @Column(name = "city_name")
     private String cityName;
-
-    public static City create(ResultSet resultSet) throws SQLException {
-        int cityId = resultSet.getInt("city_id");
-        if (resultSet.wasNull()) {
-            return null;
-        }
-        String cityName = resultSet.getString("city_name");
-        return new City(cityId, cityName);
-    }
 }

@@ -9,9 +9,11 @@ public interface EmployeeDAO {
 
     List<Employee> findAll();
 
-    int create(Employee employee);
+    void create(Employee employee);
 
-    int updateById(Integer id, Employee newEmployee);
+    void update(Employee employee);
 
     int deleteById(Integer id);
+
+    void delete(Employee employee);
 }
