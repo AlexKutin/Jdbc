@@ -5,10 +5,13 @@ import dao.EmployeeDAOImpl;
 import model.City;
 import model.Employee;
 
+import java.util.List;
+
 public class Application {
 
     public static void main(String[] args) {
         EmployeeDAO employeeDAO = new EmployeeDAOImpl();
+        CityDAO cityDAO = new CityDAOImpl();
         System.out.println("Print all employees:");
         employeeDAO.findAll().forEach(System.out::println);
         System.out.println();
@@ -23,11 +26,10 @@ public class Application {
         System.out.println(employeeId3);
         System.out.println();
 
-        System.out.println(employeeDAO.findById(7));
-
         System.out.println("Update Employee with id = 3:");
-        employeeId3.setAge(49);
-        employeeId3.setCity(7);   // New York
+        employeeId3.setAge(33);
+        City cityBerlin = cityDAO.findById(6);
+        employeeId3.setCity(cityBerlin);
         employeeDAO.update(employeeId3);
         System.out.println(employeeDAO.findById(3));
         System.out.println();
@@ -41,10 +43,8 @@ public class Application {
         System.out.println();
 
         System.out.println("Create new City:");
-        CityDAO cityDAO = new CityDAOImpl();
-        int cityId = cityDAO.createByName("Rio de Janeiro");
-        City city = cityDAO.findById(cityId);
-        System.out.println("New city: " + city);
+        City cityRio = new City();
+        cityRio.setCityName("Rio de Janeiro");
 
         System.out.println("Create new Employee:");
         Employee employee = new Employee();
@@ -52,19 +52,16 @@ public class Application {
         employee.setLastName("Almeida");
         employee.setGender("Male");
         employee.setAge(31);
-        employee.setCity(cityId);
-        System.out.println("\t" + employee);
+        employee.setCity(cityRio);
 
         employeeDAO.create(employee);
-        System.out.println("Employee count: " + employeeDAO.findAll().size());
+        List<Employee> employeeList = employeeDAO.findAll();
+        System.out.println("Employee count: " + employeeList.size());
+        employeeList.forEach(System.out::println);
         System.out.println();
 
-        System.out.println("Delete employee with id = 10:");
-        if (employeeDAO.deleteById(10) > 0) {
-            System.out.println("Delete successfully!");
-        } else {
-            System.out.println("Employee with this id is missing in the table");
-        }
+        employeeDAO.delete(employee);
         System.out.println();
+        employeeDAO.findAll().forEach(System.out::println);
     }
 }
