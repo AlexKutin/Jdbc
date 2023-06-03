@@ -17,6 +17,16 @@ public class CityDAOImpl implements CityDAO {
     }
 
     @Override
+    public void create(City city) {
+        SessionFactory sessionFactory = HibernateSessionFactoryUtils.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(city);
+            transaction.commit();
+        }
+    }
+
+    @Override
     public Integer createByName(String cityName) {
         SessionFactory sessionFactory = HibernateSessionFactoryUtils.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
@@ -26,6 +36,26 @@ public class CityDAOImpl implements CityDAO {
             Integer cityId = (Integer) session.save(city);
             transaction.commit();
             return cityId;
+        }
+    }
+
+    @Override
+    public void update(City city) {
+        SessionFactory sessionFactory = HibernateSessionFactoryUtils.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.update(city);
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public void delete(City city) {
+        SessionFactory sessionFactory = HibernateSessionFactoryUtils.getSessionFactory();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.delete(city);
+            transaction.commit();
         }
     }
 }

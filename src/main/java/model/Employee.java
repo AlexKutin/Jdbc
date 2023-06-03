@@ -24,7 +24,8 @@ public class Employee {
     private String gender;
     private Integer age;
 
-    @Column(name = "city_id")
-    private Integer city;
+    @ManyToOne(targetEntity = City.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id")
+    private City city;
 
 }
