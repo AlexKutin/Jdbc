@@ -4,27 +4,27 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
     private String gender;
     private Integer age;
-    private City city;
 
-    public static Employee create(ResultSet resultSet) throws SQLException {
-        int id = resultSet.getInt("id");
-        String first_name = resultSet.getString("first_name");
-        String last_name = resultSet.getString("last_name");
-        String gender = resultSet.getString("gender");
-        int age = resultSet.getInt("age");
-        City city = City.create(resultSet);
-        return new Employee(id, first_name, last_name, gender, age, city);
-    }
+    @Column(name = "city_id")
+    private Integer city;
+
 }
